@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Appartments" EntityType="Model.Store.Appartments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Agents" EntityType="Model.Store.Agents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AppartmentFiles" EntityType="Model.Store.AppartmentFiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AgentFiles" EntityType="Model.Store.AgentFiles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AppartmentAgent" Association="Model.Store.AppartmentAgent">
+      <End Role="Appartment" EntitySet="Appartments" />
+      <End Role="Agent" EntitySet="Agents" />
+    </AssociationSet>
+    <AssociationSet Name="AppartmentFileAppartment" Association="Model.Store.AppartmentFileAppartment">
+      <End Role="AppartmentFile" EntitySet="AppartmentFiles" />
+      <End Role="Appartment" EntitySet="Appartments" />
+    </AssociationSet>
+    <AssociationSet Name="AgentFileAgent" Association="Model.Store.AgentFileAgent">
+      <End Role="AgentFile" EntitySet="AgentFiles" />
+      <End Role="Agent" EntitySet="Agents" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Appartments">
+    <Key>
+      <PropertyRef Name="IDAppartment" />
+    </Key>
+    <Property Name="IDAppartment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="AgentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Agents">
+    <Key>
+      <PropertyRef Name="IDAgent" />
+    </Key>
+    <Property Name="IDAgent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Firstname" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Lastname" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AppartmentFiles">
+    <Key>
+      <PropertyRef Name="IDAppartmentFile" />
+    </Key>
+    <Property Name="IDAppartmentFile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="AppartmentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AgentFiles">
+    <Key>
+      <PropertyRef Name="IDAgentFile" />
+    </Key>
+    <Property Name="IDAgentFile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="AgentID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="AppartmentAgent">
+    <End Role="Appartment" Type="Model.Store.Appartments" Multiplicity="*" />
+    <End Role="Agent" Type="Model.Store.Agents" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Agent">
+        <PropertyRef Name="IDAgent" />
+      </Principal>
+      <Dependent Role="Appartment">
+        <PropertyRef Name="AgentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AppartmentFileAppartment">
+    <End Role="AppartmentFile" Type="Model.Store.AppartmentFiles" Multiplicity="*" />
+    <End Role="Appartment" Type="Model.Store.Appartments" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Appartment">
+        <PropertyRef Name="IDAppartment" />
+      </Principal>
+      <Dependent Role="AppartmentFile">
+        <PropertyRef Name="AppartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AgentFileAgent">
+    <End Role="AgentFile" Type="Model.Store.AgentFiles" Multiplicity="*" />
+    <End Role="Agent" Type="Model.Store.Agents" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Agent">
+        <PropertyRef Name="IDAgent" />
+      </Principal>
+      <Dependent Role="AgentFile">
+        <PropertyRef Name="AgentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Appartments" EntityType="Model.Appartment" />
+          <EntitySet Name="Agents" EntityType="Model.Agent" />
+          <AssociationSet Name="AppartmentAgent" Association="Model.AppartmentAgent">
+            <End Role="Appartment" EntitySet="Appartments" />
+            <End Role="Agent" EntitySet="Agents" />
+          </AssociationSet>
+          <EntitySet Name="AppartmentFiles" EntityType="Model.AppartmentFile" />
+          <AssociationSet Name="AppartmentFileAppartment" Association="Model.AppartmentFileAppartment">
+            <End Role="AppartmentFile" EntitySet="AppartmentFiles" />
+            <End Role="Appartment" EntitySet="Appartments" />
+          </AssociationSet>
+          <EntitySet Name="AgentFiles" EntityType="Model.AgentFile" />
+          <AssociationSet Name="AgentFileAgent" Association="Model.AgentFileAgent">
+            <End Role="AgentFile" EntitySet="AgentFiles" />
+            <End Role="Agent" EntitySet="Agents" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Appartment">
+          <Key>
+            <PropertyRef Name="IDAppartment" />
+          </Key>
+          <Property Name="IDAppartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="Agent" Relationship="Model.AppartmentAgent" FromRole="Appartment" ToRole="Agent" />
+          <Property Name="AgentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AppartmentFiles" Relationship="Model.AppartmentFileAppartment" FromRole="Appartment" ToRole="AppartmentFile" />
+        </EntityType>
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="IDAgent" />
+          </Key>
+          <Property Name="IDAgent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="Lastname" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="String" Nullable="false" />
+          <NavigationProperty Name="AgentFiles" Relationship="Model.AgentFileAgent" FromRole="Agent" ToRole="AgentFile" />
+        </EntityType>
+        <Association Name="AppartmentAgent">
+          <End Type="Model.Appartment" Role="Appartment" Multiplicity="*" />
+          <End Type="Model.Agent" Role="Agent" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="IDAgent" />
+            </Principal>
+            <Dependent Role="Appartment">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AppartmentFile">
+          <Key>
+            <PropertyRef Name="IDAppartmentFile" />
+          </Key>
+          <Property Name="IDAppartmentFile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <NavigationProperty Name="Appartment" Relationship="Model.AppartmentFileAppartment" FromRole="AppartmentFile" ToRole="Appartment" />
+          <Property Name="AppartmentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="AppartmentFileAppartment">
+          <End Type="Model.AppartmentFile" Role="AppartmentFile" Multiplicity="*" />
+          <End Type="Model.Appartment" Role="Appartment" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Appartment">
+              <PropertyRef Name="IDAppartment" />
+            </Principal>
+            <Dependent Role="AppartmentFile">
+              <PropertyRef Name="AppartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AgentFile">
+          <Key>
+            <PropertyRef Name="IDAgentFile" />
+          </Key>
+          <Property Name="IDAgentFile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="Model.AgentFileAgent" FromRole="AgentFile" ToRole="Agent" />
+          <Property Name="AgentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="AgentFileAgent">
+          <End Type="Model.AgentFile" Role="AgentFile" Multiplicity="*" />
+          <End Type="Model.Agent" Role="Agent" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="IDAgent" />
+            </Principal>
+            <Dependent Role="AgentFile">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="Appartments">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Appartment)">
+        <MappingFragment StoreEntitySet="Appartments">
+          <ScalarProperty Name="IDAppartment" ColumnName="IDAppartment" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Agents">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Agent)">
+        <MappingFragment StoreEntitySet="Agents">
+          <ScalarProperty Name="IDAgent" ColumnName="IDAgent" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AppartmentFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.AppartmentFile)">
+        <MappingFragment StoreEntitySet="AppartmentFiles">
+          <ScalarProperty Name="IDAppartmentFile" ColumnName="IDAppartmentFile" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="AppartmentID" ColumnName="AppartmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgentFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.AgentFile)">
+        <MappingFragment StoreEntitySet="AgentFiles">
+          <ScalarProperty Name="IDAgentFile" ColumnName="IDAgentFile" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

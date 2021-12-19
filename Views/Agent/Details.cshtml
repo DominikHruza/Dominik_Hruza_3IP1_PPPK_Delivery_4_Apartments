@@ -1,0 +1,61 @@
+﻿@model Appartments.Agent
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Agent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IDAgent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDAgent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+
+        @foreach (var uploadedFile in Model.AgentFiles)
+        {
+            <dt>
+                <strong>@uploadedFile.Name</strong>
+            </dt>
+            <dd style="margin-top:10px">
+                <img src="~/AgentFiles?id=@uploadedFile.IDAgentFile" alt="picture" width="300" height="200" />
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDAgent }) |
+    @Html.ActionLink("Back to List", "All")
+</p>

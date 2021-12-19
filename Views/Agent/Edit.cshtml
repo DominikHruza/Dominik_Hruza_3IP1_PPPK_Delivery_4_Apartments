@@ -1,0 +1,85 @@
+﻿@model Appartments.Agent
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Agent", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Agent</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDAgent, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IDAgent, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.IDAgent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @foreach (var uploadedFile in Model.AgentFiles)
+            {
+                <div class="form-group">
+                    <span class="control-label col-md-2">
+                        <strong>@uploadedFile.Name</strong><br />
+                        @Ajax.ActionLink("Delete", "Delete", "AgentFiles", new { id = uploadedFile.IDAgentFile }, new AjaxOptions() { HttpMethod = "Post" })
+                    </span>
+                    <div class="col-md-10">
+                        <img src="~/AgentFiles?id=@uploadedFile.IDAgentFile" alt="picture" width="300" height="200" />
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.Label("Picture", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" id="Picture" multiple accept="image/*" name="files" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "All")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
